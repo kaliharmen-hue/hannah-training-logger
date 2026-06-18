@@ -70,7 +70,7 @@ export default function ExerciseCard({
         ))}
       </div>
 
-      {!['rounds', 'ball_rounds', 'notes_only'].includes(exercise.inputType) ? (
+      {exercise.inputType !== 'notes_only' ? (
         <label className="field full-width">
           <span>Exercise notes</span>
           <input
@@ -185,6 +185,30 @@ function SetInputs({ exercise, set, setIndex, onSetChange }) {
     );
   }
 
+  if (exercise.inputType === 'slam_ball_rounds') {
+    return (
+      <div className="set-row slam-ball-row">
+        <label className="round-check">
+          <input
+            type="checkbox"
+            checked={Boolean(set.done)}
+            onChange={(event) => update('done', event.target.checked)}
+          />
+          <span>Round {setIndex + 1}</span>
+        </label>
+        <label className="field">
+          <span>Ball weight</span>
+          <input
+            inputMode="decimal"
+            value={set.ballWeight || ''}
+            onChange={(event) => update('ballWeight', event.target.value)}
+            placeholder="0kg"
+          />
+        </label>
+      </div>
+    );
+  }
+
   if (exercise.inputType === 'notes_only') {
     return (
       <label className="field full-width">
@@ -202,14 +226,6 @@ function SetInputs({ exercise, set, setIndex, onSetChange }) {
     <div className={`set-row ${exercise.inputType === 'rest_pause' ? 'rest-pause-row' : ''}`}>
       <span className="set-number">Set {setIndex + 1}</span>
       {renderMainFields(exercise.inputType, set, update)}
-      <label className="field note-field">
-        <span>Note</span>
-        <input
-          value={set.note || ''}
-          onChange={(event) => update('note', event.target.value)}
-          placeholder="Optional"
-        />
-      </label>
     </div>
   );
 }

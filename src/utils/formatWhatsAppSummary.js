@@ -70,6 +70,16 @@ export function formatExerciseEntry(exercise, entry) {
     return lines;
   }
 
+  if (exercise.inputType === 'slam_ball_rounds') {
+    return (entry.sets || [])
+      .map((set, index) => {
+        if (!set.done) return '';
+        const weight = set.ballWeight ? ` - ${set.ballWeight}` : '';
+        return `Round ${index + 1}: done${weight}`;
+      })
+      .filter(Boolean);
+  }
+
   if (exercise.inputType === 'notes_only') {
     const note = entry.sets?.[0]?.note?.trim();
     return note ? [`Notes: ${note}`] : [];
@@ -81,40 +91,32 @@ export function formatExerciseEntry(exercise, entry) {
 }
 
 export function formatSet(inputType, set, setNumber) {
-  const note = set.note?.trim();
-  const noteSuffix = note ? ` (${note})` : '';
-
   switch (inputType) {
     case 'weight_reps':
-      if (!set.kg && !set.reps && !note) return '';
-      if (set.kg && set.reps) return `Set ${setNumber}: ${set.kg}kg x ${set.reps}${noteSuffix}`;
-      if (set.kg) return `Set ${setNumber}: ${set.kg}kg${noteSuffix}`;
-      if (set.reps) return `Set ${setNumber}: ${set.reps} reps${noteSuffix}`;
-      return `Set ${setNumber}: ${note}`;
+      if (!set.kg && !set.reps) return '';
+      if (set.kg && set.reps) return `Set ${setNumber}: ${set.kg}kg x ${set.reps}`;
+      if (set.kg) return `Set ${setNumber}: ${set.kg}kg`;
+      return `Set ${setNumber}: ${set.reps} reps`;
     case 'rest_pause': {
-      if (!set.kg && !set.reps1 && !set.reps2 && !set.reps3 && !note) return '';
+      if (!set.kg && !set.reps1 && !set.reps2 && !set.reps3) return '';
       const reps = [set.reps1, set.reps2, set.reps3].filter(Boolean).join(' + ');
       const load = set.kg ? `${set.kg}kg` : '';
       const detail = [load, reps].filter(Boolean).join(' x ');
-      return `Extended set ${setNumber}: ${detail || note}${note && detail ? noteSuffix : ''}`;
+      return `Extended set ${setNumber}: ${detail}`;
     }
     case 'reps':
-      if (!set.reps && !note) return '';
-      return set.reps
-        ? `Set ${setNumber}: ${set.reps} reps${noteSuffix}`
-        : `Set ${setNumber}: ${note}`;
+      if (!set.reps) return '';
+      return `Set ${setNumber}: ${set.reps} reps`;
     case 'time':
-      if (!set.time && !note) return '';
-      return set.time
-        ? `Set ${setNumber}: ${set.time}${noteSuffix}`
-        : `Set ${setNumber}: ${note}`;
+      if (!set.time) return '';
+      return `Set ${setNumber}: ${set.time}`;
     case 'band_reps':
-      if (!set.band && !set.repsOrTime && !note) return '';
+      if (!set.band && !set.repsOrTime) return '';
       return `Set ${setNumber}: ${[set.band, set.repsOrTime]
         .filter(Boolean)
-        .join(' - ')}${noteSuffix}`.trim();
+        .join(' - ')}`.trim();
     default:
-      return note ? `Set ${setNumber}: ${note}` : '';
+      return '';
   }
 }
 

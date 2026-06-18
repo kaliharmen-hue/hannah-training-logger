@@ -43,7 +43,7 @@ export const programme = {
           name: 'Rotating Plank',
           target: '40 to 60 seconds',
           inputType: 'time',
-          sets: 1,
+          sets: 3,
           cues: [
             'Move with control',
             'Rotate through the ribs, not just the arm',
@@ -220,7 +220,8 @@ export const programme = {
           name: 'Slam Ball Intervals',
           target: '6 to 8 rounds',
           method: ['20 seconds slams', '40 seconds rest'],
-          inputType: 'ball_rounds',
+          inputType: 'slam_ball_rounds',
+          sets: 8,
           cues: [
             'Brace before each slam',
             'Use the whole body, not just arms',

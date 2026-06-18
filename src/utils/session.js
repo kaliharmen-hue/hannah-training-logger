@@ -23,19 +23,21 @@ export function makeEmptySession(programme) {
 export function makeEmptySet(inputType) {
   switch (inputType) {
     case 'weight_reps':
-      return { kg: '', reps: '', note: '' };
+      return { kg: '', reps: '' };
     case 'rest_pause':
-      return { kg: '', reps1: '', reps2: '', reps3: '', note: '' };
+      return { kg: '', reps1: '', reps2: '', reps3: '' };
     case 'reps':
-      return { reps: '', note: '' };
+      return { reps: '' };
     case 'time':
-      return { time: '', note: '' };
+      return { time: '' };
     case 'band_reps':
-      return { band: '', repsOrTime: '', note: '' };
+      return { band: '', repsOrTime: '' };
     case 'rounds':
-      return { rounds: '', note: '' };
+      return { rounds: '' };
     case 'ball_rounds':
-      return { ballWeight: '', rounds: '', note: '' };
+      return { ballWeight: '', rounds: '' };
+    case 'slam_ball_rounds':
+      return { done: false, ballWeight: '' };
     case 'notes_only':
       return { note: '' };
     default:
@@ -74,7 +76,13 @@ export function hasExerciseData(entry) {
   return Boolean(
     entry?.note?.trim() ||
       entry?.sets?.some((set) =>
-        Object.values(set).some((value) => String(value || '').trim()),
+        Object.entries(set).some(([key, value]) =>
+          key === 'ballWeight' && 'done' in set && !set.done
+            ? false
+            : typeof value === 'boolean'
+              ? value
+              : String(value || '').trim(),
+        ),
       ),
   );
 }
