@@ -109,7 +109,7 @@ export function formatSet(inputType, set, setNumber) {
       return `Set ${setNumber}: ${set.reps} reps`;
     case 'time':
       if (!set.time) return '';
-      return `Set ${setNumber}: ${set.time}`;
+      return `Set ${setNumber}: ${set.time} sec`;
     case 'band_reps':
       if (!set.band && !set.repsOrTime) return '';
       return `Set ${setNumber}: ${[set.band, set.repsOrTime]

@@ -316,11 +316,12 @@ function renderMainFields(inputType, set, update) {
   if (inputType === 'time') {
     return (
       <label className="field compact">
-        <span>Time</span>
+        <span>Seconds</span>
         <input
+          inputMode="numeric"
           value={set.time || ''}
           onChange={(event) => update('time', event.target.value)}
-          placeholder="20 sec"
+          placeholder="0"
         />
       </label>
     );
