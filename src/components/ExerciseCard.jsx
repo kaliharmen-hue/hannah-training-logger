@@ -34,6 +34,8 @@ export default function ExerciseCard({
         ) : null}
       </dl>
 
+      {exercise.method ? <MethodBlock method={exercise.method} /> : null}
+
       {exercise.cues?.length ? (
         <div className="cue-list">
           {exercise.cues.map((cue) => (
@@ -68,7 +70,7 @@ export default function ExerciseCard({
         ))}
       </div>
 
-      {exercise.inputType !== 'rounds' && exercise.inputType !== 'notes_only' ? (
+      {!['rounds', 'ball_rounds', 'notes_only'].includes(exercise.inputType) ? (
         <label className="field full-width">
           <span>Exercise notes</span>
           <input
@@ -81,6 +83,27 @@ export default function ExerciseCard({
         </label>
       ) : null}
     </article>
+  );
+}
+
+function MethodBlock({ method }) {
+  if (Array.isArray(method)) {
+    return (
+      <div className="method-block">
+        <strong>Method</strong>
+        <ul>
+          {method.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  return (
+    <p className="support-text">
+      <strong>Method:</strong> {method}
+    </p>
   );
 }
 
@@ -129,6 +152,39 @@ function SetInputs({ exercise, set, setIndex, onSetChange }) {
     );
   }
 
+  if (exercise.inputType === 'ball_rounds') {
+    return (
+      <div className="set-row single">
+        <label className="field">
+          <span>Ball weight</span>
+          <input
+            inputMode="decimal"
+            value={set.ballWeight || ''}
+            onChange={(event) => update('ballWeight', event.target.value)}
+            placeholder="0kg"
+          />
+        </label>
+        <label className="field">
+          <span>Rounds completed</span>
+          <input
+            inputMode="numeric"
+            value={set.rounds || ''}
+            onChange={(event) => update('rounds', event.target.value)}
+            placeholder="0"
+          />
+        </label>
+        <label className="field">
+          <span>Notes</span>
+          <input
+            value={set.note || ''}
+            onChange={(event) => update('note', event.target.value)}
+            placeholder="Optional"
+          />
+        </label>
+      </div>
+    );
+  }
+
   if (exercise.inputType === 'notes_only') {
     return (
       <label className="field full-width">
@@ -143,7 +199,7 @@ function SetInputs({ exercise, set, setIndex, onSetChange }) {
   }
 
   return (
-    <div className="set-row">
+    <div className={`set-row ${exercise.inputType === 'rest_pause' ? 'rest-pause-row' : ''}`}>
       <span className="set-number">Set {setIndex + 1}</span>
       {renderMainFields(exercise.inputType, set, update)}
       <label className="field note-field">
@@ -178,6 +234,49 @@ function renderMainFields(inputType, set, update) {
             value={set.reps || ''}
             onChange={(event) => update('reps', event.target.value)}
             placeholder="0"
+          />
+        </label>
+      </>
+    );
+  }
+
+  if (inputType === 'rest_pause') {
+    return (
+      <>
+        <label className="field compact">
+          <span>Kg</span>
+          <input
+            inputMode="decimal"
+            value={set.kg || ''}
+            onChange={(event) => update('kg', event.target.value)}
+            placeholder="0"
+          />
+        </label>
+        <label className="field compact">
+          <span>Reps 1</span>
+          <input
+            inputMode="numeric"
+            value={set.reps1 || ''}
+            onChange={(event) => update('reps1', event.target.value)}
+            placeholder="12-15"
+          />
+        </label>
+        <label className="field compact">
+          <span>Reps 2</span>
+          <input
+            inputMode="numeric"
+            value={set.reps2 || ''}
+            onChange={(event) => update('reps2', event.target.value)}
+            placeholder="4-6"
+          />
+        </label>
+        <label className="field compact">
+          <span>Reps 3</span>
+          <input
+            inputMode="numeric"
+            value={set.reps3 || ''}
+            onChange={(event) => update('reps3', event.target.value)}
+            placeholder="3-5"
           />
         </label>
       </>

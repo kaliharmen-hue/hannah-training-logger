@@ -1,4 +1,4 @@
-export default function NotesBox({ value, onChange }) {
+export default function NotesBox({ value, onChange, placeholder }) {
   return (
     <section className="notes-section">
       <label className="field full-width">
@@ -6,7 +6,7 @@ export default function NotesBox({ value, onChange }) {
         <textarea
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          placeholder="Hip felt fine, ran out of time, weight felt easy..."
+          placeholder={placeholder || 'Hip felt fine, ran out of time, weight felt easy...'}
         />
       </label>
     </section>

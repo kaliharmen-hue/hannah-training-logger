@@ -8,7 +8,7 @@ export function formatWhatsAppSummary(programme, session) {
     `Session: ${programme.sessionTitle}`,
   ];
 
-  programme.blocks.forEach((block) => {
+  programme.blocks.filter((block) => !block.hidden).forEach((block) => {
     const exerciseLines = [];
 
     block.exercises.forEach((exercise) => {
@@ -24,7 +24,7 @@ export function formatWhatsAppSummary(programme, session) {
     });
 
     if (exerciseLines.length) {
-      lines.push('', block.title.toUpperCase(), ...exerciseLines);
+      lines.push('', (block.displayTitle || block.title).toUpperCase(), ...exerciseLines);
     }
   });
 
@@ -39,6 +39,25 @@ export function formatExerciseEntry(exercise, entry) {
   if (exercise.inputType === 'rounds') {
     const roundSet = entry.sets?.[0];
     const lines = [];
+
+    if (roundSet?.rounds) {
+      lines.push(`Rounds completed: ${roundSet.rounds}`);
+    }
+
+    if (roundSet?.note?.trim()) {
+      lines.push(`Notes: ${roundSet.note.trim()}`);
+    }
+
+    return lines;
+  }
+
+  if (exercise.inputType === 'ball_rounds') {
+    const roundSet = entry.sets?.[0];
+    const lines = [];
+
+    if (roundSet?.ballWeight) {
+      lines.push(`Ball weight: ${roundSet.ballWeight}`);
+    }
 
     if (roundSet?.rounds) {
       lines.push(`Rounds completed: ${roundSet.rounds}`);
@@ -72,6 +91,13 @@ export function formatSet(inputType, set, setNumber) {
       if (set.kg) return `Set ${setNumber}: ${set.kg}kg${noteSuffix}`;
       if (set.reps) return `Set ${setNumber}: ${set.reps} reps${noteSuffix}`;
       return `Set ${setNumber}: ${note}`;
+    case 'rest_pause': {
+      if (!set.kg && !set.reps1 && !set.reps2 && !set.reps3 && !note) return '';
+      const reps = [set.reps1, set.reps2, set.reps3].filter(Boolean).join(' + ');
+      const load = set.kg ? `${set.kg}kg` : '';
+      const detail = [load, reps].filter(Boolean).join(' x ');
+      return `Extended set ${setNumber}: ${detail || note}${note && detail ? noteSuffix : ''}`;
+    }
     case 'reps':
       if (!set.reps && !note) return '';
       return set.reps

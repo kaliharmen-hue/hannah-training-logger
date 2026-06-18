@@ -111,7 +111,7 @@ export default function App() {
             <p>{programme.notes}</p>
           </section>
 
-          {programme.blocks.map((block) => (
+          {programme.blocks.filter((block) => !block.hidden).map((block) => (
             <BlockSection
               key={block.id}
               block={block}
@@ -123,7 +123,11 @@ export default function App() {
             />
           ))}
 
-          <NotesBox value={session.generalNotes} onChange={updateGeneralNotes} />
+          <NotesBox
+            value={session.generalNotes}
+            onChange={updateGeneralNotes}
+            placeholder={programme.generalNotesPrompt}
+          />
 
           <CopySummaryButton
             disabled={!canCopy}

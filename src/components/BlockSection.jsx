@@ -11,7 +11,7 @@ export default function BlockSection({
   return (
     <section className="block-section">
       <div className="block-heading">
-        <h2>{block.title}</h2>
+        <h2>{block.displayTitle || block.title}</h2>
         {block.purpose ? <p>{block.purpose}</p> : null}
         {block.notes ? <p className="fine-print">{block.notes}</p> : null}
       </div>
