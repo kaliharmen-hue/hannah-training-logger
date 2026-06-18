@@ -173,7 +173,10 @@ function CardioOptionCard({ option, entry, onFieldChange, onNotesChange }) {
           <textarea
             value={entry.notes || ''}
             onChange={(event) => onNotesChange(event.target.value)}
-            placeholder="How did it feel? Anything to change next time?"
+            placeholder={
+              option.notesPlaceholder ||
+              'How did it feel? Anything to change next time?'
+            }
           />
         </label>
       </div>

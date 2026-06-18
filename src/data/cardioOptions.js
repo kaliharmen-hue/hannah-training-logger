@@ -16,10 +16,49 @@ export const cardioOptions = {
       instructions:
         'Use a strong but controlled effort during the 30-second intervals. It should feel challenging, but not like a sprint. Use the easy intervals to recover enough to repeat the next round well.',
       fields: [
-        { id: 'speed', label: 'Speed', placeholder: 'e.g. 5.8 km/h' },
-        { id: 'incline', label: 'Incline', placeholder: 'e.g. 8%' },
-        { id: 'roundsCompleted', label: 'Rounds completed', placeholder: '0' },
+        {
+          id: 'warmUpSpeed',
+          label: 'Warm-up speed',
+          placeholder: 'e.g. 4.5 km/h',
+        },
+        {
+          id: 'warmUpIncline',
+          label: 'Warm-up incline',
+          placeholder: 'e.g. 2%',
+        },
+        {
+          id: 'hardSpeedRange',
+          label: 'Hard interval speed range',
+          placeholder: 'e.g. 5.5 to 6.2 km/h',
+        },
+        {
+          id: 'hardInclineRange',
+          label: 'Hard interval incline range',
+          placeholder: 'e.g. 8 to 12%',
+        },
+        {
+          id: 'easySpeed',
+          label: 'Easy recovery speed',
+          placeholder: 'e.g. 4.5 km/h',
+        },
+        {
+          id: 'easyIncline',
+          label: 'Easy recovery incline',
+          placeholder: 'e.g. 2 to 4%',
+        },
+        {
+          id: 'roundsCompleted',
+          label: 'Rounds completed',
+          placeholder: 'e.g. 10',
+        },
+        {
+          id: 'speedInclineChanges',
+          label: 'Did speed or incline change during the session?',
+          placeholder: 'e.g. Incline increased from round 5',
+        },
       ],
+      notesPlaceholder:
+        'e.g. Started at 8% incline, increased to 10% from round 5.',
     },
     {
       id: 'option-b-home-strength-cardio',
