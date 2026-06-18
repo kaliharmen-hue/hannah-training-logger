@@ -5,6 +5,9 @@ export function formatCardioSummary(clientName, option, entry) {
   if (option.id === 'option-b-home-strength-cardio') {
     return formatOptionBSummary(clientName, option, entry);
   }
+  if (option.id === 'option-c-norwegian-4x4') {
+    return formatOptionCSummary(clientName, option, entry);
+  }
 
   const lines = [
     `${clientName.toUpperCase()} CARDIO LOG`,
@@ -108,6 +111,47 @@ function formatOptionBSummary(clientName, option, entry) {
   }
   if (field('gobletSquatHipComfort')) {
     lines.push(`Goblet squats hip comfort: ${field('gobletSquatHipComfort')}`);
+  }
+  if (entry.notes?.trim()) {
+    lines.push(`Notes: ${entry.notes.trim()}`);
+  }
+
+  return lines.join('\n').trim();
+}
+
+function formatOptionCSummary(clientName, option, entry) {
+  const field = (id) => entry.fields?.[id]?.trim();
+  const hardIntervals = [
+    field('hardInterval1Setting'),
+    field('hardInterval2Setting'),
+    field('hardInterval3Setting'),
+    field('hardInterval4Setting'),
+  ];
+  const lines = [
+    `${clientName.toUpperCase()} CARDIO LOG`,
+    '',
+    `Date: ${formatDate(new Date())}`,
+    `${option.label.toUpperCase()} - ${option.name}`,
+  ];
+
+  if (field('activity')) lines.push(`Activity: ${field('activity')}`);
+  if (field('warmUpSetting')) lines.push(`Warm-up: ${field('warmUpSetting')}`);
+
+  if (hardIntervals.some(Boolean)) {
+    lines.push('Hard intervals:');
+    hardIntervals.forEach((interval, index) => {
+      if (interval) lines.push(`${index + 1}. ${interval}`);
+    });
+  }
+
+  if (field('recoverySetting')) {
+    lines.push(`Recovery setting: ${field('recoverySetting')}`);
+  }
+  if (field('intervalsCompleted')) {
+    lines.push(`Intervals completed: ${field('intervalsCompleted')}`);
+  }
+  if (field('effortConsistent')) {
+    lines.push(`Effort stayed consistent: ${field('effortConsistent')}`);
   }
   if (entry.notes?.trim()) {
     lines.push(`Notes: ${entry.notes.trim()}`);

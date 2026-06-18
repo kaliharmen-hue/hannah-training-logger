@@ -146,14 +146,52 @@ export const cardioOptions = {
         {
           id: 'activity',
           label: 'Activity/machine used',
-          placeholder: 'e.g. treadmill',
+          placeholder: 'e.g. treadmill / bike / rower / hill walk',
+        },
+        {
+          id: 'warmUpSetting',
+          label: 'Warm-up setting',
+          placeholder: 'e.g. 5 km/h at 3% incline',
+        },
+        {
+          id: 'hardInterval1Setting',
+          label: 'Hard interval 1 setting',
+          placeholder: 'e.g. 6 km/h at 8% incline',
+        },
+        {
+          id: 'hardInterval2Setting',
+          label: 'Hard interval 2 setting',
+          placeholder: 'e.g. 6 km/h at 9% incline',
+        },
+        {
+          id: 'hardInterval3Setting',
+          label: 'Hard interval 3 setting',
+          placeholder: 'e.g. 5.8 km/h at 9% incline',
+        },
+        {
+          id: 'hardInterval4Setting',
+          label: 'Hard interval 4 setting',
+          placeholder: 'e.g. 5.8 km/h at 9% incline',
+        },
+        {
+          id: 'recoverySetting',
+          label: 'Recovery setting',
+          placeholder: 'e.g. 4.5 km/h at 2% incline',
         },
         {
           id: 'intervalsCompleted',
           label: 'Intervals completed',
-          placeholder: '0',
+          placeholder: 'e.g. 4',
+        },
+        {
+          id: 'effortConsistent',
+          label: 'Did the effort stay consistent?',
+          type: 'choice',
+          options: ['Yes', 'Mostly', 'No'],
         },
       ],
+      notesPlaceholder:
+        'e.g. First two felt strong, last two needed slightly lower speed.',
     },
   ],
 };
