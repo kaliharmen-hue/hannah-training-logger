@@ -2,6 +2,9 @@ export function formatCardioSummary(clientName, option, entry) {
   if (option.id === 'option-a-gym-incline-walk-intervals') {
     return formatOptionASummary(clientName, option, entry);
   }
+  if (option.id === 'option-b-home-strength-cardio') {
+    return formatOptionBSummary(clientName, option, entry);
+  }
 
   const lines = [
     `${clientName.toUpperCase()} CARDIO LOG`,
@@ -39,7 +42,7 @@ function formatOptionASummary(clientName, option, entry) {
     `${clientName.toUpperCase()} CARDIO LOG`,
     '',
     `Date: ${formatDate(new Date())}`,
-    `${option.label.toUpperCase()} – ${option.name}`,
+    `${option.label.toUpperCase()} - ${option.name}`,
   ];
 
   const warmUp = formatSpeedInclineLine(
@@ -74,6 +77,43 @@ function formatSpeedInclineLine(label, speed, incline) {
   if (speed) return `${label}: ${speed}`;
   if (incline) return `${label}: ${incline}`;
   return '';
+}
+
+function formatOptionBSummary(clientName, option, entry) {
+  const field = (id) => entry.fields?.[id]?.trim();
+  const restParts = [
+    field('restAfterRound1') ? `R1 ${field('restAfterRound1')}` : '',
+    field('restAfterRound2') ? `R2 ${field('restAfterRound2')}` : '',
+    field('restAfterRound3') ? `R3 ${field('restAfterRound3')}` : '',
+    field('restAfterRound4') ? `R4 ${field('restAfterRound4')}` : '',
+  ].filter(Boolean);
+  const lines = [
+    `${clientName.toUpperCase()} CARDIO LOG`,
+    '',
+    `Date: ${formatDate(new Date())}`,
+    `${option.label.toUpperCase()} - ${option.name}`,
+  ];
+
+  if (field('roundsCompleted')) {
+    lines.push(`Rounds completed: ${field('roundsCompleted')}`);
+  }
+  if (restParts.length) {
+    lines.push(`Rest: ${restParts.join(', ')}`);
+  }
+  if (field('impactOption')) {
+    lines.push(`Skipping/low-impact option: ${field('impactOption')}`);
+  }
+  if (field('swingsCrisp')) {
+    lines.push(`Swings crisp: ${field('swingsCrisp')}`);
+  }
+  if (field('gobletSquatHipComfort')) {
+    lines.push(`Goblet squats hip comfort: ${field('gobletSquatHipComfort')}`);
+  }
+  if (entry.notes?.trim()) {
+    lines.push(`Notes: ${entry.notes.trim()}`);
+  }
+
+  return lines.join('\n').trim();
 }
 
 function formatDate(date) {

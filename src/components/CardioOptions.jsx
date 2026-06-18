@@ -160,11 +160,25 @@ function CardioOptionCard({ option, entry, onFieldChange, onNotesChange }) {
         {option.fields.map((field) => (
           <label className="field" key={field.id}>
             <span>{field.label}</span>
-            <input
-              value={entry.fields[field.id] || ''}
-              onChange={(event) => onFieldChange(field.id, event.target.value)}
-              placeholder={field.placeholder}
-            />
+            {field.type === 'choice' ? (
+              <select
+                value={entry.fields[field.id] || ''}
+                onChange={(event) => onFieldChange(field.id, event.target.value)}
+              >
+                <option value="">Choose</option>
+                {field.options.map((optionLabel) => (
+                  <option key={optionLabel} value={optionLabel}>
+                    {optionLabel}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                value={entry.fields[field.id] || ''}
+                onChange={(event) => onFieldChange(field.id, event.target.value)}
+                placeholder={field.placeholder}
+              />
+            )}
           </label>
         ))}
 

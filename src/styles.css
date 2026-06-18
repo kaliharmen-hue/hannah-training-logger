@@ -23,6 +23,7 @@ body {
 
 button,
 input,
+select,
 textarea {
   font: inherit;
 }
@@ -376,6 +377,7 @@ textarea {
 }
 
 .field input,
+.field select,
 .field textarea {
   width: 100%;
   border: 1px solid #cbd5e1;
@@ -393,6 +395,7 @@ textarea {
 }
 
 .field input:focus,
+.field select:focus,
 .field textarea:focus {
   border-color: #10b981;
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.16);

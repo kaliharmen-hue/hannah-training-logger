@@ -80,18 +80,51 @@ export const cardioOptions = {
       progression:
         'Start with 4 rounds. Progress by improving consistency and control first. Over time, aim to need slightly less rest between rounds or complete the same work with better quality. Do not reduce rest if form or hip comfort worsens.',
       fields: [
-        { id: 'roundsCompleted', label: 'Rounds completed', placeholder: '0' },
         {
-          id: 'restBetweenRounds',
-          label: 'Rest between rounds',
+          id: 'roundsCompleted',
+          label: 'Rounds completed',
+          placeholder: 'e.g. 4',
+        },
+        {
+          id: 'restAfterRound1',
+          label: 'Rest after round 1',
+          placeholder: 'e.g. 60 sec',
+        },
+        {
+          id: 'restAfterRound2',
+          label: 'Rest after round 2',
+          placeholder: 'e.g. 75 sec',
+        },
+        {
+          id: 'restAfterRound3',
+          label: 'Rest after round 3',
           placeholder: 'e.g. 90 sec',
         },
         {
+          id: 'restAfterRound4',
+          label: 'Rest after round 4',
+          placeholder: 'e.g. not needed',
+        },
+        {
           id: 'impactOption',
-          label: 'Skipping or low-impact option',
-          placeholder: 'e.g. skipping',
+          label: 'Skipping or low-impact option used',
+          placeholder: 'e.g. skipping / step jacks / marching',
+        },
+        {
+          id: 'swingsCrisp',
+          label: 'Swings stayed crisp?',
+          type: 'choice',
+          options: ['Yes', 'Mostly', 'No'],
+        },
+        {
+          id: 'gobletSquatHipComfort',
+          label: 'Goblet squats felt okay through the hip?',
+          type: 'choice',
+          options: ['Yes', 'Mostly', 'No'],
         },
       ],
+      notesPlaceholder:
+        'e.g. Needed longer rest by round 3, squats felt fine, skipping felt heavy.',
     },
     {
       id: 'option-c-norwegian-4x4',
