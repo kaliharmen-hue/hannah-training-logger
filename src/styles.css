@@ -76,6 +76,32 @@ textarea {
   margin-top: 14px;
 }
 
+.tab-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 6px 0 18px;
+}
+
+.tab-bar button,
+.option-switcher button {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #344054;
+  cursor: pointer;
+  font-weight: 900;
+  min-height: 46px;
+  padding: 10px;
+}
+
+.tab-bar button.active,
+.option-switcher button.active {
+  border-color: #047857;
+  background: #047857;
+  color: #ffffff;
+}
+
 .session-intro p,
 .block-heading p,
 .support-text,
@@ -113,6 +139,29 @@ textarea {
   display: grid;
   gap: 12px;
   margin-top: 14px;
+}
+
+.option-switcher {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.option-switcher button {
+  display: grid;
+  gap: 4px;
+  min-height: 68px;
+  text-align: left;
+}
+
+.option-switcher span {
+  font-size: 0.78rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+}
+
+.option-switcher strong {
+  font-size: 0.98rem;
 }
 
 .exercise-card {
@@ -176,6 +225,43 @@ textarea {
 
 .support-text {
   margin: 12px 0 0;
+}
+
+.cardio-card {
+  margin-top: 14px;
+}
+
+.cardio-card .eyebrow {
+  margin: 0 !important;
+}
+
+.cardio-structure {
+  border: 1px solid #d6eadf;
+  border-radius: 8px;
+  background: #effaf4;
+  color: #195f3e;
+  margin-top: 14px;
+  padding: 11px;
+}
+
+.cardio-structure strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.cardio-structure ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.cardio-structure li + li {
+  margin-top: 4px;
+}
+
+.cardio-fields {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
 }
 
 .last-time {
@@ -356,6 +442,10 @@ textarea {
 
   .exercise-card {
     padding: 18px;
+  }
+
+  .option-switcher {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .set-row {

@@ -1,6 +1,9 @@
 const currentKey = 'hannahLogger.currentSession';
 const historyKey = 'hannahLogger.history';
 const backupKey = 'hannahLogger.backups';
+const currentCardioKey = 'hannahLogger.currentCardioSession';
+const cardioHistoryKey = 'hannahLogger.cardioHistory';
+const cardioBackupKey = 'hannahLogger.cardioBackups';
 
 function readJson(key, fallback) {
   try {
@@ -50,12 +53,43 @@ export function getLastCompletedForExercise(history, programmeId, exerciseId) {
   return session?.exercises?.[exerciseId] || null;
 }
 
+export function loadCurrentCardioSession() {
+  return readJson(currentCardioKey, null);
+}
+
+export function saveCurrentCardioSession(session) {
+  const nextSession = { ...session, updatedAt: new Date().toISOString() };
+  writeJson(currentCardioKey, nextSession);
+  saveNamedBackup(cardioBackupKey, nextSession);
+  return nextSession;
+}
+
+export function clearCurrentCardioSession(emptySession) {
+  writeJson(currentCardioKey, emptySession);
+  return emptySession;
+}
+
+export function loadCardioHistory() {
+  return readJson(cardioHistoryKey, []);
+}
+
+export function saveCompletedCardioSession(completedSession) {
+  const history = loadCardioHistory();
+  const nextHistory = [completedSession, ...history];
+  writeJson(cardioHistoryKey, nextHistory);
+  return nextHistory;
+}
+
 function saveBackup(session) {
-  const backups = readJson(backupKey, []);
+  saveNamedBackup(backupKey, session);
+}
+
+function saveNamedBackup(key, session) {
+  const backups = readJson(key, []);
   const nextBackups = [
     { savedAt: new Date().toISOString(), session },
     ...backups,
   ].slice(0, 10);
 
-  writeJson(backupKey, nextBackups);
+  writeJson(key, nextBackups);
 }

@@ -17,6 +17,14 @@ src/data/programme.js
 
 Future 4-week programme updates should only need changes to that file.
 
+The editable cardio option content lives in:
+
+```text
+src/data/cardioOptions.js
+```
+
+Future cardio option updates should only need changes to that file.
+
 ## Build
 
 ```bash

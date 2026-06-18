@@ -1,10 +1,10 @@
-export default function History({ history }) {
+export default function History({ history, title = 'Training history' }) {
   const latest = history[0];
 
   return (
     <section className="history-section">
       <div className="section-heading">
-        <h2>Training history</h2>
+        <h2>{title}</h2>
         <span>{history.length} saved</span>
       </div>
 
