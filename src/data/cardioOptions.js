@@ -107,20 +107,8 @@ export const cardioOptions = {
         },
         {
           id: 'impactOption',
-          label: 'Skipping or low-impact option used',
+          label: 'What was low-impact option if used',
           placeholder: 'e.g. skipping / step jacks / marching',
-        },
-        {
-          id: 'swingsCrisp',
-          label: 'Swings stayed crisp?',
-          type: 'choice',
-          options: ['Yes', 'Mostly', 'No'],
-        },
-        {
-          id: 'gobletSquatHipComfort',
-          label: 'Goblet squats felt okay through the hip?',
-          type: 'choice',
-          options: ['Yes', 'Mostly', 'No'],
         },
       ],
       notesPlaceholder:

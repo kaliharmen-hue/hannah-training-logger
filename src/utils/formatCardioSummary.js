@@ -104,13 +104,7 @@ function formatOptionBSummary(clientName, option, entry) {
     lines.push(`Rest: ${restParts.join(', ')}`);
   }
   if (field('impactOption')) {
-    lines.push(`Skipping/low-impact option: ${field('impactOption')}`);
-  }
-  if (field('swingsCrisp')) {
-    lines.push(`Swings crisp: ${field('swingsCrisp')}`);
-  }
-  if (field('gobletSquatHipComfort')) {
-    lines.push(`Goblet squats hip comfort: ${field('gobletSquatHipComfort')}`);
+    lines.push(`Low-impact option: ${field('impactOption')}`);
   }
   if (entry.notes?.trim()) {
     lines.push(`Notes: ${entry.notes.trim()}`);
