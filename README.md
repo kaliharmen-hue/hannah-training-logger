@@ -1,6 +1,6 @@
-# Hannah Health Tracker
+# Hannah Training Logger
 
-Mobile-first local tracker for Hannah's weight-loss, training consistency, energy and recovery patterns.
+Mobile-first local training logger for Hannah's solo gym session.
 
 ## Run Locally
 
@@ -9,33 +9,52 @@ npm install
 npm run dev
 ```
 
-## What It Tracks
+The editable programme content lives in:
 
-- Daily scale weight
-- Sleep quality and disruption
-- Usable energy
-- Parenting / life load
-- Symptoms and capacity impact
-- Hunger, cravings and food consistency
-- Planned workout completion
-- Resistance training, cardio, steps and Whoop strain
-- Period days
-- Weekly tape measurements
+```text
+src/data/programme.js
+```
 
-## ChatGPT Workflow
+Future 4-week programme updates should only need changes to that file.
 
-The Export tab has three copy buttons:
+The editable cardio option content lives in:
 
-- Daily coaching: use during the week for supportive feedback without changing the plan every day.
-- Sunday review: use at the end of the week for pattern analysis and next-week focus.
-- ChatGPT project: use as the shared project instruction text.
+```text
+src/data/cardioOptions.js
+```
 
-## Storage
-
-Data is stored in the browser's local storage under separate `hannahHealth.*` keys.
+Future cardio option updates should only need changes to that file.
 
 ## Build
 
 ```bash
 npm run build
+```
+
+## GitHub Pages
+
+This repo includes a GitHub Actions workflow at:
+
+```text
+.github/workflows/deploy.yml
+```
+
+It builds and deploys automatically when changes are pushed to the `main` branch.
+
+The Vite config uses a relative base by default for local/static preview:
+
+```js
+base: process.env.VITE_BASE_PATH || './'
+```
+
+The GitHub Pages workflow sets `VITE_BASE_PATH` automatically from the repository name. For a manual GitHub Pages build, set it to the repository path, for example:
+
+```bash
+VITE_BASE_PATH=/hannah-training-logger/ npm run build
+```
+
+On Windows PowerShell:
+
+```powershell
+$env:VITE_BASE_PATH='/hannah-training-logger/'; npm run build
 ```
