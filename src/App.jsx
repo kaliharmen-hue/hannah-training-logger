@@ -85,19 +85,19 @@ export default function App() {
 
   const copyAndSave = async () => {
     const summary = formatWhatsAppSummary(programme, session);
+    const completedSession = buildCompletedSession(programme, session, summary);
+    const nextHistory = saveCompletedSession(completedSession);
+    const emptySession = makeEmptySession(programme);
 
     try {
       await copyText(summary);
-      const completedSession = buildCompletedSession(programme, session, summary);
-      const nextHistory = saveCompletedSession(completedSession);
-      const emptySession = makeEmptySession(programme);
-
-      setHistory(nextHistory);
-      setSession(clearCurrentSession(emptySession));
       setStatus('Copied and saved. Today is now shown as Last time.');
     } catch {
-      setStatus('Copy failed. Select the last history entry and copy it manually.');
+      setStatus('Saved, but copy failed. Copy the latest history entry manually.');
     }
+
+    setHistory(nextHistory);
+    setSession(clearCurrentSession(emptySession));
   };
 
   return (

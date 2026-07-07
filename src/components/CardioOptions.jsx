@@ -68,23 +68,23 @@ export default function CardioOptions({
       selectedOption,
       selectedEntry,
     );
+    const completed = buildCompletedCardioSession(
+      selectedOption,
+      selectedEntry,
+      summary,
+    );
+    const nextHistory = saveCompletedCardioSession(completed);
+    const emptySession = makeEmptyCardioSession(cardioOptions);
 
     try {
       await copyText(summary);
-      const completed = buildCompletedCardioSession(
-        selectedOption,
-        selectedEntry,
-        summary,
-      );
-      const nextHistory = saveCompletedCardioSession(completed);
-      const emptySession = makeEmptyCardioSession(cardioOptions);
-
-      setCardioHistory(nextHistory);
-      setCardioSession(clearCurrentCardioSession(emptySession));
       setStatus(`Copied and saved ${selectedOption.label}.`);
     } catch {
-      setStatus('Copy failed. Select the last cardio history entry and copy it manually.');
+      setStatus(`Saved ${selectedOption.label}, but copy failed. Copy the latest cardio history entry manually.`);
     }
+
+    setCardioHistory(nextHistory);
+    setCardioSession(clearCurrentCardioSession(emptySession));
   };
 
   return (
