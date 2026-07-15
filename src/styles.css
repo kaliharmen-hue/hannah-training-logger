@@ -1,6 +1,12 @@
 :root {
   color: #182033;
   background: #f5f7f8;
+  --accent: #f97316;
+  --accent-dark: #c2410c;
+  --accent-soft: #fff7ed;
+  --accent-border: #fed7aa;
+  --accent-text: #9a3412;
+  --accent-focus: rgba(249, 115, 22, 0.18);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
@@ -62,7 +68,7 @@ textarea {
 }
 
 .eyebrow {
-  color: #047857 !important;
+  color: var(--accent-dark) !important;
   font-size: 0.82rem;
   letter-spacing: 0;
   margin-bottom: 8px !important;
@@ -98,8 +104,8 @@ textarea {
 
 .tab-bar button.active,
 .option-switcher button.active {
-  border-color: #047857;
-  background: #047857;
+  border-color: var(--accent);
+  background: var(--accent);
   color: #ffffff;
 }
 
@@ -114,7 +120,7 @@ textarea {
 }
 
 .session-intro {
-  border-left: 4px solid #10b981;
+  border-left: 4px solid var(--accent);
   padding: 2px 0 2px 14px;
 }
 
@@ -185,7 +191,7 @@ textarea {
 }
 
 .exercise-topline span {
-  color: #047857;
+  color: var(--accent-dark);
   font-weight: 800;
 }
 
@@ -215,10 +221,10 @@ textarea {
 }
 
 .cue-list span {
-  border: 1px solid #d6eadf;
+  border: 1px solid var(--accent-border);
   border-radius: 999px;
-  background: #effaf4;
-  color: #195f3e;
+  background: var(--accent-soft);
+  color: var(--accent-text);
   padding: 6px 9px;
   font-size: 0.88rem;
   font-weight: 700;
@@ -229,10 +235,10 @@ textarea {
 }
 
 .method-block {
-  border: 1px solid #d6eadf;
+  border: 1px solid var(--accent-border);
   border-radius: 8px;
-  background: #effaf4;
-  color: #195f3e;
+  background: var(--accent-soft);
+  color: var(--accent-text);
   margin-top: 14px;
   padding: 11px;
 }
@@ -260,10 +266,10 @@ textarea {
 }
 
 .cardio-structure {
-  border: 1px solid #d6eadf;
+  border: 1px solid var(--accent-border);
   border-radius: 8px;
-  background: #effaf4;
-  color: #195f3e;
+  background: var(--accent-soft);
+  color: var(--accent-text);
   margin-top: 14px;
   padding: 11px;
 }
@@ -350,7 +356,7 @@ textarea {
 .round-check input {
   width: 20px;
   height: 20px;
-  accent-color: #047857;
+  accent-color: var(--accent);
 }
 
 .round-check span {
@@ -397,8 +403,8 @@ textarea {
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.16);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-focus);
 }
 
 .note-field,
@@ -421,7 +427,7 @@ textarea {
   min-height: 52px;
   border: 0;
   border-radius: 8px;
-  background: #047857;
+  background: var(--accent);
   color: #ffffff;
   cursor: pointer;
   font-weight: 900;
