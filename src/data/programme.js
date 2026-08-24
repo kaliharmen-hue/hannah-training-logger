@@ -154,8 +154,10 @@ export const programme = {
           id: 'single-leg-db-rdl',
           name: 'C2. Single-Leg DB RDL',
           target: '8 reps each side',
-          method:
+          method: [
+            'Hold one dumbbell in the opposite hand to the leg you are standing on.',
             'Keep the weight moderate. This is about control rather than lifting as heavily as possible.',
+          ],
           inputType: 'weight_only',
           sets: 1,
           showNotes: false,
