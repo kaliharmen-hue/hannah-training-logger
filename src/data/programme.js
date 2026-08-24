@@ -47,8 +47,9 @@ export const programme = {
             'Keep breathing while maintaining as much whole-body tension as possible.',
             'This should feel much harder than a normal plank.',
           ],
-          inputType: 'display_only',
-          sets: 0,
+          inputType: 'time',
+          sets: 3,
+          showNotes: false,
           progression:
             'Once you can hold 15 seconds with full tension, progress to 20 seconds.',
         },
@@ -109,7 +110,7 @@ export const programme = {
           cues: [
             'Pull towards the upper face',
             'Keep shoulders down',
-            'Finish with the hands slightly apart',
+            'Try to get your thumbs behind your head',
             'Control the return',
           ],
           progression:
@@ -172,8 +173,9 @@ export const programme = {
           id: 'side-plank-with-reach-through',
           name: 'C3. Side Plank with Reach-Through',
           target: '8 reps each side',
-          inputType: 'display_only',
-          sets: 0,
+          inputType: 'reps',
+          sets: 1,
+          showNotes: false,
           cues: [
             'Keep hips lifted',
             'Stay long through the body',
