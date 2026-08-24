@@ -36,7 +36,7 @@ export function formatWhatsAppSummary(programme, session) {
 }
 
 export function formatExerciseEntry(exercise, entry) {
-  if (exercise.inputType === 'rounds') {
+  if (exercise.inputType === 'rounds' || exercise.inputType === 'rounds_only') {
     const roundSet = entry.sets?.[0];
     const lines = [];
 
@@ -44,7 +44,7 @@ export function formatExerciseEntry(exercise, entry) {
       lines.push(`Rounds completed: ${roundSet.rounds}`);
     }
 
-    if (roundSet?.note?.trim()) {
+    if (exercise.inputType === 'rounds' && roundSet?.note?.trim()) {
       lines.push(`Notes: ${roundSet.note.trim()}`);
     }
 
@@ -97,6 +97,9 @@ export function formatSet(inputType, set, setNumber) {
       if (set.kg && set.reps) return `Set ${setNumber}: ${set.kg}kg x ${set.reps}`;
       if (set.kg) return `Set ${setNumber}: ${set.kg}kg`;
       return `Set ${setNumber}: ${set.reps} reps`;
+    case 'weight_only':
+      if (!set.kg) return '';
+      return `Set ${setNumber}: ${set.kg}kg`;
     case 'rest_pause': {
       if (!set.kg && !set.reps1 && !set.reps2 && !set.reps3) return '';
       const reps = [set.reps1, set.reps2, set.reps3].filter(Boolean).join(' + ');

@@ -56,7 +56,9 @@ export default function ExerciseCard({
         </p>
       ) : null}
 
-      <LastTime lines={lastLines} note={lastEntry?.note} />
+      {exercise.inputType !== 'display_only' ? (
+        <LastTime lines={lastLines} note={lastEntry?.note} />
+      ) : null}
 
       <div className="set-list">
         {(entry?.sets || []).map((set, index) => (
@@ -70,7 +72,9 @@ export default function ExerciseCard({
         ))}
       </div>
 
-      {exercise.inputType !== 'notes_only' ? (
+      {exercise.inputType !== 'notes_only' &&
+      exercise.inputType !== 'display_only' &&
+      exercise.showNotes !== false ? (
         <label className="field full-width">
           <span>Exercise notes</span>
           <input
@@ -128,7 +132,11 @@ function SetInputs({ exercise, set, setIndex, onSetChange }) {
     onSetChange(exercise.id, setIndex, field, value);
   };
 
-  if (exercise.inputType === 'rounds') {
+  if (exercise.inputType === 'display_only') {
+    return null;
+  }
+
+  if (exercise.inputType === 'rounds' || exercise.inputType === 'rounds_only') {
     return (
       <div className="set-row single">
         <label className="field">
@@ -140,14 +148,16 @@ function SetInputs({ exercise, set, setIndex, onSetChange }) {
             placeholder="0"
           />
         </label>
-        <label className="field">
-          <span>Notes</span>
-          <input
-            value={set.note || ''}
-            onChange={(event) => update('note', event.target.value)}
-            placeholder="Optional"
-          />
-        </label>
+        {exercise.inputType === 'rounds' ? (
+          <label className="field">
+            <span>Notes</span>
+            <input
+              value={set.note || ''}
+              onChange={(event) => update('note', event.target.value)}
+              placeholder="Optional"
+            />
+          </label>
+        ) : null}
       </div>
     );
   }
@@ -224,7 +234,9 @@ function SetInputs({ exercise, set, setIndex, onSetChange }) {
 
   return (
     <div className={`set-row ${exercise.inputType === 'rest_pause' ? 'rest-pause-row' : ''}`}>
-      <span className="set-number">Set {setIndex + 1}</span>
+      <span className="set-number">
+        {exercise.setLabels?.[setIndex] || `Set ${setIndex + 1}`}
+      </span>
       {renderMainFields(exercise.inputType, set, update)}
     </div>
   );
@@ -253,6 +265,20 @@ function renderMainFields(inputType, set, update) {
           />
         </label>
       </>
+    );
+  }
+
+  if (inputType === 'weight_only') {
+    return (
+      <label className="field compact">
+        <span>Kg</span>
+        <input
+          inputMode="decimal"
+          value={set.kg || ''}
+          onChange={(event) => update('kg', event.target.value)}
+          placeholder="0"
+        />
+      </label>
     );
   }
 

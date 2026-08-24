@@ -24,6 +24,8 @@ export function makeEmptySet(inputType) {
   switch (inputType) {
     case 'weight_reps':
       return { kg: '', reps: '' };
+    case 'weight_only':
+      return { kg: '' };
     case 'rest_pause':
       return { kg: '', reps1: '', reps2: '', reps3: '' };
     case 'reps':
@@ -33,6 +35,7 @@ export function makeEmptySet(inputType) {
     case 'band_reps':
       return { band: '', repsOrTime: '' };
     case 'rounds':
+    case 'rounds_only':
       return { rounds: '' };
     case 'ball_rounds':
       return { ballWeight: '', rounds: '' };
@@ -40,6 +43,8 @@ export function makeEmptySet(inputType) {
       return { done: false, ballWeight: '' };
     case 'notes_only':
       return { note: '' };
+    case 'display_only':
+      return {};
     default:
       return { note: '' };
   }
