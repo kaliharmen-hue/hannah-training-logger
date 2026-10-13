@@ -18,7 +18,7 @@ export const programme = {
           inputType: 'weight_reps',
           sets: 4,
           showNotes: false,
-          method: 'Start around 95-100kg and adjust from there. The goal is for 12-15 reps to feel hard by the end while still keeping the same depth and control.',
+          method: 'Start around 80kg after 2-3 warm-up sets and adjust from there. The goal is for 12-15 reps to feel hard by the end while still keeping the same depth and control.',
           progression: 'When you can achieve 15 reps on all four sets with good form, increase the weight by the smallest available increment next time.',
         },
         {
