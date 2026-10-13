@@ -1,3 +1,5 @@
+import { hasExerciseData } from './session.js';
+
 const currentKey = 'hannahLogger.currentSession';
 const historyKey = 'hannahLogger.history';
 const backupKey = 'hannahLogger.backups';
@@ -45,9 +47,9 @@ export function saveCompletedSession(completedSession) {
   return nextHistory;
 }
 
-export function getLastCompletedForExercise(history, programmeId, exerciseId) {
+export function getLastCompletedForExercise(history, _programmeId, exerciseId) {
   const session = history.find(
-    (entry) => entry.programmeId === programmeId && entry.exercises?.[exerciseId],
+    (entry) => hasExerciseData(entry.exercises?.[exerciseId]),
   );
 
   return session?.exercises?.[exerciseId] || null;

@@ -237,12 +237,12 @@ function SetInputs({ exercise, set, setIndex, onSetChange }) {
       <span className="set-number">
         {exercise.setLabels?.[setIndex] || `Set ${setIndex + 1}`}
       </span>
-      {renderMainFields(exercise.inputType, set, update)}
+      {renderMainFields(exercise.inputType, set, update, exercise.setLabel)}
     </div>
   );
 }
 
-function renderMainFields(inputType, set, update) {
+function renderMainFields(inputType, set, update, setLabel) {
   if (inputType === 'weight_reps') {
     return (
       <>
@@ -256,7 +256,7 @@ function renderMainFields(inputType, set, update) {
           />
         </label>
         <label className="field compact">
-          <span>Reps</span>
+          <span>{setLabel ? `Reps (${setLabel})` : 'Reps'}</span>
           <input
             inputMode="numeric"
             value={set.reps || ''}

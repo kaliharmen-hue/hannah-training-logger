@@ -1,4 +1,4 @@
-import { hasExerciseData } from './session';
+import { hasExerciseData } from './session.js';
 
 export function formatWhatsAppSummary(programme, session) {
   const lines = [
@@ -86,7 +86,10 @@ export function formatExerciseEntry(exercise, entry) {
   }
 
   return (entry.sets || [])
-    .map((set, index) => formatSet(exercise.inputType, set, index + 1))
+    .map((set, index) => {
+      const line = formatSet(exercise.inputType, set, index + 1);
+      return line && set.reps && exercise.setLabel ? `${line} ${exercise.setLabel}` : line;
+    })
     .filter(Boolean);
 }
 
