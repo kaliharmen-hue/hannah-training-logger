@@ -360,6 +360,50 @@ textarea {
   grid-template-columns: 1fr;
 }
 
+.set-row.rep-row {
+  grid-template-columns: 44px minmax(60px, 1fr) minmax(132px, 1.4fr);
+  align-items: start;
+}
+
+.set-row.reps-only .rep-field {
+  grid-column: 2 / -1;
+}
+
+.rep-stepper {
+  display: grid;
+  grid-template-columns: 44px minmax(44px, 1fr) 44px;
+}
+
+.rep-stepper button {
+  min-height: 46px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  font-size: 1.35rem;
+  font-weight: 800;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.rep-stepper button:first-child { border-radius: 8px 0 0 8px; }
+.rep-stepper button:last-child { border-radius: 0 8px 8px 0; }
+.rep-stepper button:disabled { color: #98a2b3; background: #f8fafc; cursor: default; }
+.rep-stepper input { border-radius: 0; text-align: center; padding-inline: 2px; }
+.rep-stepper button:focus-visible,
+.last-reps-button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.last-reps-button {
+  min-height: 44px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #344054;
+  background: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
 .set-row.rest-pause-row {
   grid-template-columns: 56px repeat(2, minmax(74px, 1fr));
 }

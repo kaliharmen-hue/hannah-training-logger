@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { getLastCompletedForExercise } from '../utils/storage';
 import { formatExerciseEntry } from '../utils/formatWhatsAppSummary';
 
@@ -67,6 +68,7 @@ export default function ExerciseCard({
             exercise={exercise}
             set={set}
             setIndex={index}
+            lastSet={lastEntry?.sets?.[index]}
             onSetChange={onSetChange}
           />
         ))}
@@ -127,7 +129,7 @@ function LastTime({ lines, note }) {
   );
 }
 
-function SetInputs({ exercise, set, setIndex, onSetChange }) {
+function SetInputs({ exercise, set, setIndex, lastSet, onSetChange }) {
   const update = (field, value) => {
     onSetChange(exercise.id, setIndex, field, value);
   };
@@ -233,16 +235,16 @@ function SetInputs({ exercise, set, setIndex, onSetChange }) {
   }
 
   return (
-    <div className={`set-row ${exercise.inputType === 'rest_pause' ? 'rest-pause-row' : ''}`}>
+    <div className={`set-row ${exercise.inputType === 'rest_pause' ? 'rest-pause-row' : ''} ${['weight_reps', 'reps'].includes(exercise.inputType) ? 'rep-row' : ''} ${exercise.inputType === 'reps' ? 'reps-only' : ''}`}>
       <span className="set-number">
         {exercise.setLabels?.[setIndex] || `Set ${setIndex + 1}`}
       </span>
-      {renderMainFields(exercise.inputType, set, update, exercise.setLabel)}
+      {renderMainFields(exercise.inputType, set, update, exercise.setLabel, lastSet, `${exercise.name}, set ${setIndex + 1}`)}
     </div>
   );
 }
 
-function renderMainFields(inputType, set, update, setLabel) {
+function renderMainFields(inputType, set, update, setLabel, lastSet, context) {
   if (inputType === 'weight_reps') {
     return (
       <>
@@ -255,15 +257,8 @@ function renderMainFields(inputType, set, update, setLabel) {
             placeholder="0"
           />
         </label>
-        <label className="field compact">
-          <span>{setLabel ? `Reps (${setLabel})` : 'Reps'}</span>
-          <input
-            inputMode="numeric"
-            value={set.reps || ''}
-            onChange={(event) => update('reps', event.target.value)}
-            placeholder="0"
-          />
-        </label>
+        <RepsInput value={set.reps} onChange={(value) => update('reps', value)}
+          setLabel={setLabel} lastReps={lastSet?.reps} context={context} />
       </>
     );
   }
@@ -327,15 +322,8 @@ function renderMainFields(inputType, set, update, setLabel) {
 
   if (inputType === 'reps') {
     return (
-      <label className="field compact">
-        <span>Reps</span>
-        <input
-          inputMode="numeric"
-          value={set.reps || ''}
-          onChange={(event) => update('reps', event.target.value)}
-          placeholder="0"
-        />
-      </label>
+      <RepsInput value={set.reps} onChange={(value) => update('reps', value)}
+        setLabel={setLabel} lastReps={lastSet?.reps} context={context} />
     );
   }
 
@@ -377,4 +365,30 @@ function renderMainFields(inputType, set, update, setLabel) {
   }
 
   return null;
+}
+
+function RepsInput({ value, onChange, setLabel, lastReps, context }) {
+  const id = useId();
+  const count = /^\d+$/.test(String(value ?? '')) ? Number(value) : 0;
+  const previous = /^\d+$/.test(String(lastReps ?? '')) ? String(lastReps) : null;
+
+  return (
+    <div className="field rep-field">
+      <label htmlFor={id}><span>{setLabel ? `Reps (${setLabel})` : 'Reps'}</span></label>
+      <div className="rep-stepper">
+        <button type="button" aria-label={`${context}: decrease reps`} title="Decrease reps"
+          disabled={count === 0} onClick={() => onChange(String(Math.max(0, count - 1)))}>-</button>
+        <input id={id} inputMode="numeric" pattern="[0-9]*" value={value ?? ''}
+          onChange={(event) => onChange(event.target.value)} placeholder="0" />
+        <button type="button" aria-label={`${context}: increase reps`} title="Increase reps"
+          onClick={() => onChange(String(count + 1))}>+</button>
+      </div>
+      {previous !== null ? (
+        <button className="last-reps-button" type="button"
+          title={`Use ${previous} reps from last time`}
+          aria-label={`${context}: use ${previous} reps from last time`}
+          onClick={() => onChange(previous)}>Last time: {previous}</button>
+      ) : null}
+    </div>
+  );
 }
