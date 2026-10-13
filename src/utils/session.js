@@ -106,6 +106,12 @@ export function buildCompletedSession(programme, session, summary) {
     clientName: programme.clientName,
     sessionTitle: programme.sessionTitle,
     completedAt: new Date().toISOString(),
+    exerciseDetails: Object.fromEntries(
+      programme.blocks.flatMap((block) => block.exercises.map((exercise) => [
+        exercise.id,
+        { name: exercise.name, inputType: exercise.inputType, setLabel: exercise.setLabel },
+      ])),
+    ),
     exercises: session.exercises,
     generalNotes: session.generalNotes,
     summary,

@@ -6,6 +6,7 @@ import NotesBox from './components/NotesBox.jsx';
 import CopySummaryButton from './components/CopySummaryButton.jsx';
 import History from './components/History.jsx';
 import CardioOptions from './components/CardioOptions.jsx';
+import PersonalBests from './components/PersonalBests.jsx';
 import { programme } from './data/programme.js';
 import { cardioOptions } from './data/cardioOptions.js';
 import { formatWhatsAppSummary } from './utils/formatWhatsAppSummary.js';
@@ -137,6 +138,8 @@ export default function App() {
 
           <History history={history} />
         </>
+      ) : activeTab === 'bests' ? (
+        <PersonalBests history={history} programme={programme} />
       ) : (
         <CardioOptions
           cardioSession={cardioSession}

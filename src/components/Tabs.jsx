@@ -15,6 +15,13 @@ export default function Tabs({ activeTab, onChange }) {
       >
         Cardio Options
       </button>
+      <button
+        className={activeTab === 'bests' ? 'active' : ''}
+        onClick={() => onChange('bests')}
+        type="button"
+      >
+        Personal Bests
+      </button>
     </nav>
   );
 }

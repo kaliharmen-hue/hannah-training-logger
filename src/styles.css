@@ -85,7 +85,7 @@ textarea {
 
 .tab-bar {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   margin: 6px 0 18px;
 }
@@ -101,6 +101,31 @@ textarea {
   min-height: 46px;
   padding: 10px;
 }
+
+.tab-bar button {
+  font-size: 0.88rem;
+  overflow-wrap: anywhere;
+}
+
+.bests-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 0.85rem;
+}
+
+.bests-table th,
+.bests-table td {
+  text-align: left;
+  padding: 10px 4px;
+  border-bottom: 1px solid #edf1f5;
+  overflow-wrap: anywhere;
+}
+
+.bests-table th:first-child { width: 43%; }
+.bests-table td:nth-child(2) { color: var(--accent-dark); font-weight: 800; }
+.bests-table thead { color: #596579; }
 
 .tab-bar button.active,
 .option-switcher button.active {
