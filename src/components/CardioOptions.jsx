@@ -158,7 +158,7 @@ function CardioOptionCard({ option, entry, onFieldChange, onNotesChange }) {
 
       <div className="cardio-fields">
         {option.fields.map((field) => (
-          <label className="field" key={field.id}>
+          <label className={`field ${field.paired ? 'paired-field' : 'full-width'}`} key={field.id}>
             <span>{field.label}</span>
             {field.type === 'choice' ? (
               <select
@@ -166,6 +166,9 @@ function CardioOptionCard({ option, entry, onFieldChange, onNotesChange }) {
                 onChange={(event) => onFieldChange(field.id, event.target.value)}
               >
                 <option value="">Choose</option>
+                {entry.fields[field.id] && !field.options.includes(entry.fields[field.id]) ? (
+                  <option value={entry.fields[field.id]}>{entry.fields[field.id]}</option>
+                ) : null}
                 {field.options.map((optionLabel) => (
                   <option key={optionLabel} value={optionLabel}>
                     {optionLabel}
@@ -181,6 +184,13 @@ function CardioOptionCard({ option, entry, onFieldChange, onNotesChange }) {
             )}
           </label>
         ))}
+
+        {option.fields.some((field) => field.paired) &&
+          Object.entries(entry.fields).some(([id, value]) => id.endsWith('Setting') && value?.trim()) ? (
+          <p className="support-text full-width">Previously entered settings: {Object.entries(entry.fields)
+            .filter(([id, value]) => id.endsWith('Setting') && value?.trim())
+            .map(([id, value]) => `${id.replace(/([A-Z])/g, ' $1')}: ${value}`).join('; ')}</p>
+        ) : null}
 
         <label className="field full-width">
           <span>Notes</span>

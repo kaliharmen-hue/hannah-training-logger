@@ -115,11 +115,20 @@ function formatOptionBSummary(clientName, option, entry) {
 
 function formatOptionCSummary(clientName, option, entry) {
   const field = (id) => entry.fields?.[id]?.trim();
+  const setting = (prefix) => {
+    const parts = [
+      field(`${prefix}Speed`) ? `Speed: ${field(`${prefix}Speed`)}` : '',
+      field(`${prefix}ResistanceIncline`) ? `Resistance / Incline: ${field(`${prefix}ResistanceIncline`)}` : '',
+    ].filter(Boolean);
+    const previous = field(`${prefix}Setting`);
+    if (parts.length) return parts.join(', ') + (previous ? ` (previously entered: ${previous})` : '');
+    return previous;
+  };
   const hardIntervals = [
-    field('hardInterval1Setting'),
-    field('hardInterval2Setting'),
-    field('hardInterval3Setting'),
-    field('hardInterval4Setting'),
+    setting('hardInterval1'),
+    setting('hardInterval2'),
+    setting('hardInterval3'),
+    setting('hardInterval4'),
   ];
   const lines = [
     `${clientName.toUpperCase()} CARDIO LOG`,
@@ -129,7 +138,7 @@ function formatOptionCSummary(clientName, option, entry) {
   ];
 
   if (field('activity')) lines.push(`Activity: ${field('activity')}`);
-  if (field('warmUpSetting')) lines.push(`Warm-up: ${field('warmUpSetting')}`);
+  if (setting('warmUp')) lines.push(`Warm-up: ${setting('warmUp')}`);
 
   if (hardIntervals.some(Boolean)) {
     lines.push('Hard intervals:');
@@ -138,8 +147,8 @@ function formatOptionCSummary(clientName, option, entry) {
     });
   }
 
-  if (field('recoverySetting')) {
-    lines.push(`Recovery setting: ${field('recoverySetting')}`);
+  if (setting('recovery')) {
+    lines.push(`Recovery setting: ${setting('recovery')}`);
   }
   if (field('intervalsCompleted')) {
     lines.push(`Intervals completed: ${field('intervalsCompleted')}`);
