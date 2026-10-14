@@ -116,9 +116,13 @@ function formatOptionBSummary(clientName, option, entry) {
 function formatOptionCSummary(clientName, option, entry) {
   const field = (id) => entry.fields?.[id]?.trim();
   const setting = (prefix) => {
+    const speed = field(`${prefix}Speed`);
+    const resistance = field(`${prefix}ResistanceIncline`);
+    const type = field('settingType') || 'Resistance / Incline';
+    const numeric = (value) => /^\d+(\.\d+)?$/.test(value || '');
     const parts = [
-      field(`${prefix}Speed`) ? `Speed: ${field(`${prefix}Speed`)}` : '',
-      field(`${prefix}ResistanceIncline`) ? `Resistance / Incline: ${field(`${prefix}ResistanceIncline`)}` : '',
+      speed ? `Speed: ${speed}${numeric(speed) ? ' km/h' : ''}` : '',
+      resistance ? `${type}: ${resistance}${type === 'Incline' && numeric(resistance) ? '%' : ''}` : '',
     ].filter(Boolean);
     const previous = field(`${prefix}Setting`);
     if (parts.length) return parts.join(', ') + (previous ? ` (previously entered: ${previous})` : '');
@@ -138,6 +142,7 @@ function formatOptionCSummary(clientName, option, entry) {
   ];
 
   if (field('activity')) lines.push(`Activity: ${field('activity')}`);
+  if (field('settingType')) lines.push(`Setting type: ${field('settingType')}`);
   if (setting('warmUp')) lines.push(`Warm-up: ${setting('warmUp')}`);
 
   if (hardIntervals.some(Boolean)) {

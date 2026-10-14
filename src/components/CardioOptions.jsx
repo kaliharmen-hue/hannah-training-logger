@@ -8,6 +8,7 @@ import {
   makeEmptyCardioSession,
 } from '../utils/cardioSession.js';
 import { formatCardioSummary } from '../utils/formatCardioSummary.js';
+import { getCardioFieldOptions } from '../utils/cardioFieldOptions.js';
 import {
   clearCurrentCardioSession,
   saveCompletedCardioSession,
@@ -160,16 +161,16 @@ function CardioOptionCard({ option, entry, onFieldChange, onNotesChange }) {
         {option.fields.map((field) => (
           <label className={`field ${field.paired ? 'paired-field' : 'full-width'}`} key={field.id}>
             <span>{field.label}</span>
-            {field.type === 'choice' ? (
+            {field.type === 'choice' || field.type === 'number_picker' ? (
               <select
                 value={entry.fields[field.id] || ''}
                 onChange={(event) => onFieldChange(field.id, event.target.value)}
               >
                 <option value="">Choose</option>
-                {entry.fields[field.id] && !field.options.includes(entry.fields[field.id]) ? (
+                {entry.fields[field.id] && !getCardioFieldOptions(field).includes(entry.fields[field.id]) ? (
                   <option value={entry.fields[field.id]}>{entry.fields[field.id]}</option>
                 ) : null}
-                {field.options.map((optionLabel) => (
+                {getCardioFieldOptions(field).map((optionLabel) => (
                   <option key={optionLabel} value={optionLabel}>
                     {optionLabel}
                   </option>
