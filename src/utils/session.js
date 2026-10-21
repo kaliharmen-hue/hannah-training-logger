@@ -1,19 +1,20 @@
+import { getAllExercises, getSelectedExercises } from './exerciseOptions.js';
+
 export function makeEmptySession(programme) {
   const exercises = {};
 
-  programme.blocks.forEach((block) => {
-    block.exercises.forEach((exercise) => {
-      exercises[exercise.id] = {
-        sets: Array.from({ length: exercise.sets || 1 }, () =>
-          makeEmptySet(exercise.inputType),
-        ),
-        note: '',
-      };
-    });
+  getAllExercises(programme).forEach((exercise) => {
+    exercises[exercise.id] = {
+      sets: Array.from({ length: exercise.sets || 1 }, () =>
+        makeEmptySet(exercise.inputType),
+      ),
+      note: '',
+    };
   });
 
   return {
     programmeId: programme.id,
+    selections: {},
     updatedAt: new Date().toISOString(),
     exercises,
     generalNotes: '',
@@ -57,21 +58,26 @@ export function normaliseSession(programme, session) {
 
   const fresh = makeEmptySession(programme);
 
-  programme.blocks.forEach((block) => {
-    block.exercises.forEach((exercise) => {
-      const saved = session.exercises?.[exercise.id];
-      if (!saved) return;
+  getAllExercises(programme).forEach((exercise) => {
+    const saved = session.exercises?.[exercise.id];
+    if (!saved) return;
 
-      fresh.exercises[exercise.id] = {
-        note: saved.note || '',
-        sets: fresh.exercises[exercise.id].sets.map((emptySet, index) => ({
-          ...emptySet,
-          ...(saved.sets?.[index] || {}),
-        })),
-      };
-    });
+    fresh.exercises[exercise.id] = {
+      note: saved.note || '',
+      sets: fresh.exercises[exercise.id].sets.map((emptySet, index) => ({
+        ...emptySet,
+        ...(saved.sets?.[index] || {}),
+      })),
+    };
   });
 
+  for (const block of programme.blocks) {
+    for (const exercise of block.exercises) {
+      if (exercise.options?.some((option) => option.id === session.selections?.[exercise.id])) {
+        fresh.selections[exercise.id] = session.selections[exercise.id];
+      }
+    }
+  }
   fresh.generalNotes = session.generalNotes || '';
   fresh.updatedAt = session.updatedAt || fresh.updatedAt;
   return fresh;
@@ -92,10 +98,11 @@ export function hasExerciseData(entry) {
   );
 }
 
-export function hasSessionData(session) {
+export function hasSessionData(session, programme) {
   return Boolean(
     session?.generalNotes?.trim() ||
-      Object.values(session?.exercises || {}).some(hasExerciseData),
+      (programme ? getSelectedExercises(programme, session).map((exercise) => session.exercises[exercise.id])
+        : Object.values(session?.exercises || {})).some(hasExerciseData),
   );
 }
 
@@ -107,12 +114,15 @@ export function buildCompletedSession(programme, session, summary) {
     sessionTitle: programme.sessionTitle,
     completedAt: new Date().toISOString(),
     exerciseDetails: Object.fromEntries(
-      programme.blocks.flatMap((block) => block.exercises.map((exercise) => [
+      getSelectedExercises(programme, session).map((exercise) => [
         exercise.id,
         { name: exercise.name, inputType: exercise.inputType, setLabel: exercise.setLabel },
-      ])),
+      ]),
     ),
-    exercises: session.exercises,
+    selections: { ...session.selections },
+    exercises: Object.fromEntries(getSelectedExercises(programme, session).map((exercise) =>
+      [exercise.id, session.exercises[exercise.id]],
+    )),
     generalNotes: session.generalNotes,
     summary,
   };

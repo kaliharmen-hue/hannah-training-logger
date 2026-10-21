@@ -5,6 +5,7 @@ import { makeEmptySession, normaliseSession, buildCompletedSession } from './ses
 import { getLastCompletedForExercise } from './storage.js';
 import { formatWhatsAppSummary } from './formatWhatsAppSummary.js';
 import { getPersonalBests } from './personalBests.js';
+import { getSelectedExercise } from './exerciseOptions.js';
 
 test('new programme starts blank and keeps completed entries available across blocks', () => {
   const oldEntry = { sets: [{ kg: '35', reps: '12' }], note: '' };
@@ -26,7 +27,8 @@ test('all four blocks have the prescribed rounds and conditioning fields', () =>
   const fresh = makeEmptySession(programme);
   assert.deepEqual(programme.blocks.map((block) => block.exercises.length), [2, 3, 3, 3]);
   for (const [index, block] of programme.blocks.entries()) {
-    for (const exercise of block.exercises) {
+    for (const slot of block.exercises) {
+      const exercise = getSelectedExercise(slot, fresh);
       assert.equal(fresh.exercises[exercise.id].sets.length, index === 0 ? 4 : 3);
       assert.equal(exercise.showNotes, false);
     }

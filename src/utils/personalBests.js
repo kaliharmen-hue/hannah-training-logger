@@ -1,3 +1,5 @@
+import { getAllExercises } from './exerciseOptions.js';
+
 function number(value) {
   const text = String(value ?? '').trim();
   if (!/^\d+(?:[.,]\d+)?$/.test(text)) return null;
@@ -10,9 +12,7 @@ function exerciseName(name) {
 }
 
 export function getPersonalBests(history, programme) {
-  const current = Object.fromEntries(programme.blocks.flatMap((block) =>
-    block.exercises.map((exercise) => [exercise.id, exercise]),
-  ));
+  const current = Object.fromEntries(getAllExercises(programme).map((exercise) => [exercise.id, exercise]));
   const exercises = new Map();
 
   for (const session of history) {

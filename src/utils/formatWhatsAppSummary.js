@@ -1,4 +1,5 @@
 import { hasExerciseData } from './session.js';
+import { getSelectedExercise } from './exerciseOptions.js';
 
 export function formatWhatsAppSummary(programme, session) {
   const lines = [
@@ -11,7 +12,8 @@ export function formatWhatsAppSummary(programme, session) {
   programme.blocks.filter((block) => !block.hidden).forEach((block) => {
     const exerciseLines = [];
 
-    block.exercises.forEach((exercise) => {
+    block.exercises.forEach((slot) => {
+      const exercise = getSelectedExercise(slot, session);
       const entry = session.exercises[exercise.id];
       if (!hasExerciseData(entry)) return;
 

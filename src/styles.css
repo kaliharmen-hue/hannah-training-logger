@@ -209,6 +209,8 @@ textarea {
   gap: 6px;
 }
 
+.exercise-selector { margin-bottom: 14px; }
+
 .exercise-topline h3 {
   margin: 0;
   color: #101828;

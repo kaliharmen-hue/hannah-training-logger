@@ -9,12 +9,14 @@ export default function ExerciseCard({
   programmeId,
   onSetChange,
   onExerciseNoteChange,
+  selector,
 }) {
   const lastEntry = getLastCompletedForExercise(history, programmeId, exercise.id);
   const lastLines = lastEntry ? formatExerciseEntry(exercise, lastEntry) : [];
 
   return (
     <article className="exercise-card">
+      {selector}
       <div className="exercise-topline">
         <h3>{exercise.name}</h3>
         <span>{exercise.target}</span>

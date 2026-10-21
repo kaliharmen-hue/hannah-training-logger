@@ -40,7 +40,14 @@ export default function App() {
   const [cardioHistory, setCardioHistory] = useState(() => loadCardioHistory());
   const [status, setStatus] = useState('Your progress saves automatically.');
 
-  const canCopy = useMemo(() => hasSessionData(session), [session]);
+  const canCopy = useMemo(() => hasSessionData(session, programme), [session]);
+
+  const updateExerciseSelection = (slotId, exerciseId) => {
+    setSession((current) => ({
+      ...current,
+      selections: { ...current.selections, [slotId]: exerciseId },
+    }));
+  };
 
   useEffect(() => {
     saveCurrentSession(session);
@@ -119,6 +126,7 @@ export default function App() {
               session={session}
               history={history}
               programmeId={programme.id}
+              onExerciseSelectionChange={updateExerciseSelection}
               onSetChange={updateSet}
               onExerciseNoteChange={updateExerciseNote}
             />
