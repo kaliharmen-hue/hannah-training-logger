@@ -269,5 +269,53 @@ export const cardioOptions = {
       notesPlaceholder:
         'e.g. First two felt strong, last two needed slightly lower speed.',
     },
+    {
+      id: 'option-d-rower-intervals',
+      label: 'Option D',
+      name: 'Rower Intervals',
+      equipment: 'Any rowing machine and a phone interval timer',
+      totalTime: 'Around 24-32 minutes with 60-second work and recovery intervals',
+      structure: [
+        '5 minutes easy rowing to warm up',
+        'Start with 8-10 rounds, building towards 12 rounds',
+        'Each round: 60 seconds hard but controlled rowing, then 60 seconds recovery',
+        'Use a phone interval timer for both work and recovery; the rower screen is not needed',
+        '3 minutes easy rowing or walking to cool down',
+      ],
+      instructions:
+        'Keep the rowing strong and controlled, with a similar effort each round. During recovery, stay seated or stand and walk nearby if preferred. Allow time to get safely off and back onto the rower, and be settled before the next work interval. Start with 8-10 rounds and choose the number that lets you keep good technique throughout. No resistance setting or screen readings are needed. Record the rounds completed and the work and recovery times actually used. If recovery times change during the session, record the differences in the notes.',
+      progression:
+        'Build from 8-10 rounds towards 12 while keeping the rowing controlled and the effort consistent. Once that feels manageable, either shorten recovery a little or increase the work time a little. Change one thing at a time, and reduce the number of rounds if needed while adjusting to the new timings. Keep enough recovery to maintain good technique and get settled safely for the next round.',
+      fields: [
+        {
+          id: 'roundsCompleted',
+          label: 'Rounds completed',
+          type: 'number_picker',
+          min: 0,
+          max: 12,
+          step: 1,
+        },
+        {
+          id: 'workSeconds',
+          label: 'Work time per round (seconds)',
+          type: 'number_picker',
+          min: 15,
+          max: 180,
+          step: 5,
+          paired: true,
+        },
+        {
+          id: 'recoverySeconds',
+          label: 'Recovery time per round (seconds)',
+          type: 'number_picker',
+          min: 0,
+          max: 180,
+          step: 5,
+          paired: true,
+        },
+      ],
+      notesPlaceholder:
+        'e.g. 10 rounds at 60 seconds work / 60 seconds recovery. Last two rounds felt harder. Recovery increased to 75 seconds after round 8.',
+    },
   ],
 };
